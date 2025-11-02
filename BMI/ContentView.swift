@@ -9,35 +9,41 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State private var enterdNumber: Double = 0.0 // 1: TextFieldに入力した数値の変数
-    @State private var originalUnit = "meter"
-    private var convertedNumber: Double = 0 // 換算後の数値。
+    @State private var height: Double = 0.0
+    @State private var weight: Double = 0.0
+    @State private var unit = "meter"
     
-    let heightUnits = ["meter", "centimeter"] //身長の単位
+    let units = ["meter", "centimeter"]
     
     var body: some View {
         Form {
             Section("入力") {
                 HStack{
-                    TextField("Original", value: $enterdNumber, format: .number)
+                    TextField("", value: $height, format: .number)
                         .keyboardType(.numberPad)
-                        .padding()
                     
-                    //Picker("", selection: $heightUnits){
-                    //ForEach(heightUnits, id: \.self) { unit in
-                    //Text(unit)
+                    Picker("", selection: $unit){
+                        ForEach(units, id: \.self) { unit in
+                            Text(unit)
+                        }
+                    }
+                }
+                
+                HStack{
+                    TextField("", value: $weight, format: .number)
+                        .keyboardType(.numberPad)
+                    
+                    Text("kg")
                 }
             }
             
-
-            
             Section("結果") {
-                Text("Text 1")
+                Text("NaN")
             }
         }
+        
     }
 }
-
 #Preview {
     ContentView()
 }
