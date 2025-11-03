@@ -29,13 +29,12 @@ struct ContentView: View {
         }
     }
     
-    // MARK: - BMI評価判定
+    // MARK: - BMI評価
     
     var bmiCategory: String {
-        if height == 0 || weight == 0 {
-            return ""
-        }
-            switch bmi {
+        if height == 0 || weight == 0 {return ""}
+        
+        switch bmi {
         case ..<18.5:
             return "低体重"
         case 18.5..<25:
@@ -54,53 +53,52 @@ struct ContentView: View {
     // MARK: - Body
     
     var body: some View {
-        Form {
-            Section("入力") {
-                HStack{
-                    TextField("", value: $height, format: .number)
-                        .keyboardType(.decimalPad)
-                        .focused($isFocused)
-                        .toolbar {
-                            ToolbarItem(placement: .keyboard) {
-                                HStack{
-                                    Spacer()
-                                    Button {
-                                        isFocused = false
-                                    } label: {
-                                        Text("Done")
+        NavigationStack {
+            Form {
+                Section("入力") {
+                    HStack{
+                        TextField("", value: $height, format: .number)
+                            .keyboardType(.decimalPad)
+                            .focused($isFocused)
+                            .toolbar {
+                                ToolbarItem(placement: .keyboard) {
+                                    HStack{
+                                        Spacer()
+                                        Button {
+                                            isFocused = false
+                                        } label: {
+                                            Text("Done")
+                                        }
                                     }
                                 }
                             }
-                        }
-                    
-                    Picker("", selection: $unit){
-                        ForEach(units, id: \.self) { unit in
-                            Text(unit)
+                            .navigationTitle("BMI計算機")
+                        
+                        Picker("", selection: $unit){
+                            ForEach(units, id: \.self) { unit in
+                                Text(unit)
+                            }
                         }
                     }
-                }
-                
-                HStack{
-                    TextField("", value: $weight, format: .number)
-                        .keyboardType(.decimalPad)
-                        .focused($isFocused)
                     
-                    Text("kg")
+                    HStack{
+                        TextField("", value: $weight, format: .number)
+                            .keyboardType(.decimalPad)
+                            .focused($isFocused)
+                        
+                        Text("kg")
+                    }
                 }
-            }
-            
-            Section("結果") {
-                Text("\(bmi, specifier: "%.2f")")
-//                Task(bmiCategory)
-                
-            }
-            Section("評価") {
-                Text(bmiCategory)
+                Section("結果") {
+                    Text("\(bmi, specifier: "%.2f")")
+                }
+                Section("評価") {
+                    Text(bmiCategory)
+                }
             }
         }
     }
 }
-
 #Preview {
     ContentView()
 }
