@@ -29,6 +29,24 @@ struct ContentView: View {
         }
     }
     
+    // MARK: - BMI評価判定
+    
+    var bmiCategory: String {
+        switch bmi {
+        case ..<18.5:
+            return "低体重"
+        case 18.5..<25:
+            return "普通体重"
+        case 25..<30:
+            return "肥満（1度）"
+        case 30..<35:
+            return "肥満（2度）"
+        case 35..<40:
+            return "肥満（3度）"
+        default:
+            return "肥満（4度）"
+        }
+    }
     
     // MARK: - Body
     
@@ -70,9 +88,13 @@ struct ContentView: View {
             
             Section("結果") {
                 Text("\(bmi, specifier: "%.2f")")
+//                Task(bmiCategory)
+                
+            }
+            Section("評価") {
+                Text(bmiCategory)
             }
         }
-        
     }
 }
 
