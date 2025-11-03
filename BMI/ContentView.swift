@@ -13,6 +13,10 @@ struct ContentView: View {
     @State private var weight: Double = 0.0
     @State private var unit = "meter"
     
+    var bmi: Double {
+        weight / (height * height)
+    }
+    
     let units = ["meter", "centimeter"]
     
     var body: some View {
@@ -38,7 +42,7 @@ struct ContentView: View {
             }
             
             Section("結果") {
-                Text("NaN")
+                Text("\(bmi)")
             }
         }
         
