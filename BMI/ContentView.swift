@@ -32,7 +32,10 @@ struct ContentView: View {
     // MARK: - BMI評価判定
     
     var bmiCategory: String {
-        switch bmi {
+        if height == 0 || weight == 0 {
+            return ""
+        }
+            switch bmi {
         case ..<18.5:
             return "低体重"
         case 18.5..<25:
